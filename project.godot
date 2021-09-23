@@ -12,10 +12,34 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Mech",
 "language": "GDScript",
-"path": "res://Mech.gd"
+"path": "res://Mech/Mech.gd"
+}, {
+"base": "RigidBody2D",
+"class": "MechBall",
+"language": "GDScript",
+"path": "res://Ball.gd"
+}, {
+"base": "State",
+"class": "PlayerState",
+"language": "GDScript",
+"path": "res://Mech/PlayerState.gd"
+}, {
+"base": "Node",
+"class": "State",
+"language": "GDScript",
+"path": "res://FSM/State.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://FSM/StateMachine.gd"
 } ]
 _global_script_class_icons={
-"Mech": ""
+"Mech": "",
+"MechBall": "",
+"PlayerState": "",
+"State": "",
+"StateMachine": ""
 }
 
 [application]

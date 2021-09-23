@@ -1,17 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Mech.gd" type="Script" id=1]
-[ext_resource path="res://assets/mech.png" type="Texture" id=2]
+[ext_resource path="res://Mech/Mech.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 528, 40 )
-
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 16.0
-height = 80.0
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 16.0
 
 [node name="Level" type="Node2D"]
 
@@ -28,29 +21,7 @@ shape = SubResource( 1 )
 color = Color( 0.329412, 0.270588, 0.368627, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
-[node name="Mech" type="KinematicBody2D" parent="."]
-position = Vector2( 40, 472 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="Mech" parent="." instance=ExtResource( 1 )]
+position = Vector2( 72, 472 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Mech"]
-position = Vector2( 0, 8 )
-shape = SubResource( 2 )
-
-[node name="Sprite" type="Sprite" parent="Mech"]
-texture = ExtResource( 2 )
-
-[node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2( 192, 424 )
-gravity_scale = 2.0
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
-shape = SubResource( 3 )
-
-[node name="Polygon2D" type="Polygon2D" parent="Ball"]
-polygon = PoolVector2Array( 0, -16, 8, -16, 16, -8, 16, 0, 16, 8, 8, 16, 0, 16, -8, 16, -16, 8, -16, 0, -16, -8, -8, -16 )
+[node name="Ball" parent="." instance=ExtResource( 2 )]
