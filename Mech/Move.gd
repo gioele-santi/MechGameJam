@@ -19,7 +19,7 @@ func unhandled_input(event: InputEvent) -> void:
 		state_machine.transition_to("Move/Crouch")
 		return
 	if event.is_action_pressed("kick") and player.is_on_floor():
-		state_machine.transition_to("Attack/Punch1") #it could become Attack/Punch if I have some reused code
+		state_machine.transition_to("Attack/Kick") #it could become Attack/Punch if I have some reused code
 		return
 
 
@@ -44,6 +44,8 @@ func calculate_velocity(current_velocity: Vector2, move_direction: Vector2, delt
 	new_velocity = move_direction * delta * move_speed
 	if new_velocity.length() > max_speed:
 		new_velocity = new_velocity.normalized() * max_speed
+	
+	# add lerp for inertia and ground drag here (when on floor)
 	
 	#apply manual gravity
 	new_velocity.y = current_velocity.y + gravity * get_physics_process_delta_time() # delta
