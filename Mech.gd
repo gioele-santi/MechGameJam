@@ -1,15 +1,14 @@
 extends KinematicBody2D
 class_name Mech
 
-enum {IDLE, SLIDE, RUN, JUMP, HURT, DEAD, CROUCH}
+enum {IDLE, SLIDE, RUN, JUMP, FALL, HURT, DEAD, CROUCH}
 var state = IDLE setget set_state
 
-export var speed = 7.0
-export var max_speed = 300.0
-export var ground_drag = 3.0
-export var gravity = 100.0
-
-export var jump_speed = 5000.0
+export (float, 0, 1.0) var friction = 0.02
+export (float, 0, 1.0) var acceleration = 0.04
+export (int) var speed = 800
+export (int) var jump_speed = -1000
+export (int) var gravity = 4000
 
 var velocity = Vector2.ZERO
 
@@ -18,44 +17,43 @@ var velocity = Vector2.ZERO
 func _ready() -> void:
 	pass # Replace with function body.
 
-func _physics_process(delta: float) -> void:
-	#print(velocity.y)
-	velocity.y = gravity # change if adding a climb action
-	var direction := get_input_direction()
-	match state:
-		SLIDE:
-			velocity.x -= ground_drag * sign(velocity.x)
-			if abs(velocity.x) <= 0:
-				self.state = IDLE
-				velocity.x = 0
-		RUN:
-			$Sprite.flip_h = direction.x < 0
-			velocity += direction * speed
-			velocity.x = clamp(velocity.x,-max_speed, max_speed)
-			#generate dust particles when running
-		JUMP:
-			if is_on_floor():
-				velocity.y = -jump_speed 
+func _physics_process(delta):
+	
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			velocity.y = jump_speed
+			self.state = JUMP
+	
+	# apply gravity
+	velocity.y += gravity * delta
+	if velocity.y > 0:
+		self.state = FALL
+	
+	var dir = get_input_direction()
+	
+	if state != JUMP or state != FALL:
+		if dir != 0:
+			velocity.x = lerp(velocity.x, dir * speed, acceleration)
+			self.state = SLIDE if velocity.x > 0.1 else IDLE
+		else:
+			velocity.x = lerp(velocity.x, 0, friction)
+			self.state = RUN
+	
+	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	
+	
 
-	#add inertia to slow down when no input
-	move_and_slide(velocity, Vector2.UP)
-	
-	
+func get_input_direction() -> int:
+	var dir := 0
+	if Input.is_action_pressed("move_right"):
+		dir += 1
+		$Sprite.flip_h = false
+	if Input.is_action_pressed("move_left"):
+		dir -= 1
+		$Sprite.flip_h = true
+	return dir
 
-
-func get_input_direction() -> Vector2:
-	var direction = Vector2(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"), 0)
-	
-	if direction.length() <= 0:
-		self.state = SLIDE
-	else:
-		self.state = RUN
-	
-	if Input.is_action_pressed("jump") and is_on_floor():
-		self.state = JUMP
-		print(velocity.y)
-	
-	return direction
 
 func set_state(new_value) -> void:
 	if new_value == state:
