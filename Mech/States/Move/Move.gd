@@ -1,7 +1,7 @@
 extends PlayerState
 
-export (float) var max_speed: = 2000.0 
-export (float) var move_speed: = 8000.0
+export (float) var max_speed: = 300.0 
+export (float) var move_speed: = 20000.0
 export (float) var gravity: = 800.0
 export (float) var jump_percentage = 66.6 # %
 var jump_impulse = -1 * gravity * jump_percentage /100.0
@@ -41,13 +41,13 @@ static func get_input_direction() -> Vector2:
 
 func calculate_velocity(current_velocity: Vector2, move_direction: Vector2, delta: float) -> Vector2:
 	var new_velocity: = current_velocity
+	
 	new_velocity = move_direction * delta * move_speed
 	if new_velocity.length() > max_speed:
 		new_velocity = new_velocity.normalized() * max_speed
-	
-	# add lerp for inertia and ground drag here (when on floor)
-	
+
 	#apply manual gravity
-	new_velocity.y = current_velocity.y + gravity * get_physics_process_delta_time() # delta
+	new_velocity.y = current_velocity.y + gravity * delta
 	
+	print(new_velocity)
 	return new_velocity
