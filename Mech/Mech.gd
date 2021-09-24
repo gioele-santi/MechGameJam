@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Mech
 
-enum States {IDLE, WALK, RUN,  JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK}
+enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHARGE}
 onready var player := $AnimationPlayer
 onready var fsm := $FSM
 var state : int = 0
@@ -51,6 +51,8 @@ func transition_to(state_id: int) -> void:
 			#tween
 		States.KICK:
 			anim_name = "kick"
+		States.KICKCHARGE:
+			anim_name = "kick_charge"
 		States.WIN:
 			anim_name = "win"
 			#fsm should have disabled all processing
@@ -72,7 +74,7 @@ func _on_player_animation_finished(name: String)-> void:
 		return #animation is only played at start of state
 	elif name == "crouch":
 		return #animation is only played at start of state
-	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick":
+	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick" or name == "kick_charge":
 		emit_signal("attack_completed") #fsm needs to know when anmation ends and it can switch state
 #	elif name == "":
 #		target_state_path = ""

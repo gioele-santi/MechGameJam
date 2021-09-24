@@ -19,10 +19,8 @@ func unhandled_input(event: InputEvent) -> void:
 		state_machine.transition_to("Move/Crouch")
 		return
 	if event.is_action_pressed("kick") and player.is_on_floor():
-		state_machine.transition_to("Attack/Kick") #it could become Attack/Punch if I have some reused code
+		state_machine.transition_to("Attack/KickCharge") #it could become Attack/Punch if I have some reused code
 		return
-
-
 
 func physics_process(delta: float) -> void:
 	#get input left-right
@@ -48,6 +46,4 @@ func calculate_velocity(current_velocity: Vector2, move_direction: Vector2, delt
 
 	#apply manual gravity
 	new_velocity.y = current_velocity.y + gravity * delta
-	
-	print(new_velocity)
 	return new_velocity
