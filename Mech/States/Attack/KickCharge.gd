@@ -10,17 +10,21 @@ func enter(msg: Dictionary = {}) -> void:
 	overheat = false
 	overheat_countdown = 10.0
 	player.transition_to(player.States.KICKCHARGE)
-	
+
+func physics_process(delta: float) -> void:
+	_parent.physics_process(delta)
 
 func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("kick"):
 		state_machine.transition_to("Attack/Kick", {"charge": charge})
 
 func process(delta: float) -> void:
+	print(charge)
 	charge += delta # consider adding a multiplier
 	# emit signal to represent on GUI
 	# if a max value is overflow, overheat and sen 
 	if overheat :
+		print("overherat")
 		overheat = true
 		overheat_countdown -= delta
 		if overheat_countdown <= 0.0:

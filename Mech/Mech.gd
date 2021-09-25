@@ -19,8 +19,10 @@ func set_direction(value: Vector2) -> void:
 	direction = value
 	if direction.x > 0: #no equal -> keep last direction when no button is pressed
 		$Sprite.set_flip_h(false)
+		$InteractiveAreas.scale.x = 1
 	elif direction.x < 0:
 		$Sprite.set_flip_h(true)
+		$InteractiveAreas.scale.x = -1
 	pass
 
 func transition_to(state_id: int) -> void:
@@ -89,6 +91,9 @@ func _on_fsm_change(state_path: String) -> void:
 
 func _on_Foot_body_entered(body: Node) -> void:
 	if body is MechBall:
-		var ball_pos = body.global_position
-		var direction = ball_pos - $Foot.global_position
-		body.get_thrown(direction.normalized())
+		body.controllable = true
+
+
+func _on_Foot_body_exited(body: Node) -> void:
+	if body is MechBall:
+		body.controllable = false

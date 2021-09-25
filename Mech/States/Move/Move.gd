@@ -18,15 +18,12 @@ func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_down"):
 		state_machine.transition_to("Move/Crouch")
 		return
-#	if event.is_action_pressed("kick") and player.is_on_floor():
-#		state_machine.transition_to("Attack/KickCharge") #it could become Attack/Punch if I have some reused code
-#		return
 
 func physics_process(delta: float) -> void:
 	#get input left-right
-	if Input.is_action_just_pressed("kick") and player.is_on_floor():
-		state_machine.transition_to("Attack/KickCharge") 
-		return
+#	if Input.is_action_just_pressed("kick") and player.is_on_floor():
+#		state_machine.transition_to("Attack/KickCharge") 
+#		return
 	
 	var input_direction := get_input_direction()
 	

@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Ball.gd" type="Script" id=1]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="PhysicsMaterial" id=1]
+bounce = 0.3
+
+[sub_resource type="CircleShape2D" id=2]
 radius = 16.0
 
 [node name="Ball" type="RigidBody2D"]
 position = Vector2( 192, 424 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 2.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,7 +18,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( 0, -16, 8, -16, 16, -8, 16, 0, 16, 8, 8, 16, 0, 16, -8, 16, -16, 8, -16, 0, -16, -8, -8, -16 )

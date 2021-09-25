@@ -21,6 +21,34 @@ shape = SubResource( 1 )
 color = Color( 0.329412, 0.270588, 0.368627, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
+[node name="Ground2" type="StaticBody2D" parent="."]
+position = Vector2( 1064, 288 )
+rotation = 1.5708
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Ground2"]
+color = Color( 0.329412, 0.270588, 0.368627, 1 )
+polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
+
+[node name="Ground3" type="StaticBody2D" parent="."]
+position = Vector2( -40, 312 )
+rotation = 1.5708
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground3"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Ground3"]
+color = Color( 0.329412, 0.270588, 0.368627, 1 )
+polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
+
 [node name="Mech" parent="." instance=ExtResource( 1 )]
 position = Vector2( 72, 472 )
 
