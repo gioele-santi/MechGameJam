@@ -1,12 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Mech/Mech.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Camera/MultiTargetCamera.gd" type="Script" id=3]
+[ext_resource path="res://Level.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 528, 40 )
 
 [node name="Level" type="Node2D"]
+script = ExtResource( 4 )
+ball_scene = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 512, 232 )
+current = true
+script = ExtResource( 3 )
+
+[node name="Mech" parent="." instance=ExtResource( 1 )]
+position = Vector2( 72, 472 )
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2( 528, 576 )
@@ -18,11 +30,24 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Ground"]
-color = Color( 0.329412, 0.270588, 0.368627, 1 )
+color = Color( 0.831373, 0.623529, 0.380392, 1 )
+polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
+
+[node name="Ground4" type="StaticBody2D" parent="."]
+position = Vector2( 1584, 576 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground4"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Ground4"]
+color = Color( 0.831373, 0.623529, 0.380392, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
 [node name="Ground2" type="StaticBody2D" parent="."]
-position = Vector2( 1064, 288 )
+position = Vector2( 2152, 288 )
 rotation = 1.5708
 __meta__ = {
 "_edit_group_": true
@@ -32,7 +57,7 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Ground2"]
-color = Color( 0.329412, 0.270588, 0.368627, 1 )
+color = Color( 0.831373, 0.623529, 0.380392, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
 [node name="Ground3" type="StaticBody2D" parent="."]
@@ -46,10 +71,5 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Ground3"]
-color = Color( 0.329412, 0.270588, 0.368627, 1 )
+color = Color( 0.843137, 0.65098, 0.423529, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
-
-[node name="Mech" parent="." instance=ExtResource( 1 )]
-position = Vector2( 72, 472 )
-
-[node name="Ball" parent="." instance=ExtResource( 2 )]

@@ -1,37 +1,36 @@
 extends RigidBody2D
 class_name MechBall
 
+signal out_of_reach
+
 var timer := 0.0
 var controllable := false setget set_controllable
 export var base_strength := 200.0
+var base_direction := Vector2(1,0) 
 
-func _ready() -> void:
-	set_process(false)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("kick"):
 		timer = 0.0
-		set_process(true)
 	elif event.is_action_released("kick"):
-		set_process(false)
-		var strength = base_strength + timer * 500.0
-		apply_impulse(Vector2.ZERO, get_input_direction() * strength)
+		var strength = base_strength + timer * 1000.0
+		var dir = get_input_direction()
+		if dir.length() <= 0:
+			dir = base_direction # in case of kick and no motion
+		apply_impulse(Vector2.ZERO, dir * strength)
 
 func _process(delta: float) -> void:
 	timer += delta
+	print(global_position)
+	if global_position.y < -400 or global_position.y > 600:
+		emit_signal("out_of_reach")
+		set_process(false)
 
 func get_input_direction() -> Vector2:
 	return Vector2(Input.get_action_strength("move_right")-Input.get_action_strength("move_left"),
 	Input.get_action_strength("move_down")-Input.get_action_strength("move_up")).normalized()
 
-#func get_thrown(direction: Vector2, stength: float = 2500.0) -> void:
-#	#offset should be on point of contact
-#	apply_impulse(Vector2.ZERO, direction * strength)
-	
-
 func set_controllable(value: bool) -> void:
 	controllable = value
 	set_process_unhandled_input(controllable)
 	print("Ball is controllable:" + str(value))
-
-# when setting controllable I need the player to send itsposition so I can guaess the direction in case of not running player (if not running I have no direction.x

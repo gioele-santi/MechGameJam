@@ -41,6 +41,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BallSpawn" type="Position2D" parent="."]
+position = Vector2( 145.819, -261.883 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2( 0, 8 )

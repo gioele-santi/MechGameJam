@@ -5,6 +5,7 @@ enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHA
 onready var player := $AnimationPlayer
 onready var fsm := $FSM
 var state : int = 0
+onready var ball_spawn := $BallSpawn
 
 signal attack_completed
 
@@ -88,9 +89,9 @@ func _on_player_animation_finished(name: String)-> void:
 func _on_fsm_change(state_path: String) -> void:
 	$StateLabel.text = fsm.state_name
 
-
 func _on_Foot_body_entered(body: Node) -> void:
 	if body is MechBall:
+		body.base_direction = direction.normalized()
 		body.controllable = true
 
 
