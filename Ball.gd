@@ -8,7 +8,6 @@ var controllable := false setget set_controllable
 export var base_strength := 200.0
 var base_direction := Vector2(1,0) 
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("kick"):
 		timer = 0.0
@@ -18,10 +17,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if dir.length() <= 0:
 			dir = base_direction # in case of kick and no motion
 		apply_impulse(Vector2.ZERO, dir * strength)
+		print("Kick direction: " + str(dir) + " - strength: " + str(strength))
 
 func _process(delta: float) -> void:
 	timer += delta
-	print(global_position)
 	if global_position.y < -400 or global_position.y > 600:
 		emit_signal("out_of_reach")
 		set_process(false)
@@ -33,4 +32,4 @@ func get_input_direction() -> Vector2:
 func set_controllable(value: bool) -> void:
 	controllable = value
 	set_process_unhandled_input(controllable)
-	print("Ball is controllable:" + str(value))
+#	print("Ball is controllable:" + str(value))

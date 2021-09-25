@@ -19,10 +19,12 @@ func _ready() -> void:
 func set_direction(value: Vector2) -> void:
 	direction = value
 	if direction.x > 0: #no equal -> keep last direction when no button is pressed
-		$Sprite.set_flip_h(false)
+		$SpriteR.visible = true
+		$SpriteL.visible = false
 		$InteractiveAreas.scale.x = 1
 	elif direction.x < 0:
-		$Sprite.set_flip_h(true)
+		$SpriteR.visible = false
+		$SpriteL.visible = true
 		$InteractiveAreas.scale.x = -1
 	pass
 
