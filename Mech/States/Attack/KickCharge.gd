@@ -9,6 +9,8 @@ func enter(msg: Dictionary = {}) -> void:
 	charge = start_value
 	overheat = false
 	overheat_countdown = 10.0
+	player.transition_to(player.States.KICKCHARGE)
+	
 
 func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("kick"):

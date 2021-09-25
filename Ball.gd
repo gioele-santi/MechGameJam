@@ -12,6 +12,6 @@ func get_input_direction() -> Vector2:
 	return Vector2(Input.get_action_strength("move_right")-Input.get_action_strength("move_left"),
 	Input.get_action_strength("move_down")-Input.get_action_strength("move_up")).normalized()
 
-func get_thrown(direction: Vector2) -> void:
+func get_thrown(direction: Vector2, stength: float = 2500.0) -> void:
 	#offset should be on point of contact
-	apply_impulse(Vector2.ZERO, direction)
+	apply_impulse(Vector2.ZERO, direction * strength)

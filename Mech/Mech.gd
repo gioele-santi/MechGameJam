@@ -64,7 +64,7 @@ func transition_to(state_id: int) -> void:
 	player.play(anim_name)
 
 func _on_player_animation_finished(name: String)-> void:
-	var target_state_path := "Move/Ground/Idle" #most actions will go to ground idle
+	var target_state_path := "Move/Idle" #most actions will go to ground idle
 	if name == "die":
 		queue_free()
 		#signal for gameover (or delegate health object)
@@ -75,7 +75,9 @@ func _on_player_animation_finished(name: String)-> void:
 	elif name == "crouch":
 		return #animation is only played at start of state
 	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick" or name == "kick_charge":
-		emit_signal("attack_completed") #fsm needs to know when anmation ends and it can switch state
+		emit_signal("attack_completed")
+		return 
+		 #fsm needs to know when anmation ends and it can switch state
 #	elif name == "":
 #		target_state_path = ""
 	
@@ -83,3 +85,10 @@ func _on_player_animation_finished(name: String)-> void:
 
 func _on_fsm_change(state_path: String) -> void:
 	$StateLabel.text = fsm.state_name
+
+
+func _on_Foot_body_entered(body: Node) -> void:
+	if body is MechBall:
+		var ball_pos = body.global_position
+		var direction = ball_pos - $Foot.global_position
+		body.get_thrown(direction.normalized())

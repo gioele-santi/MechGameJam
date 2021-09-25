@@ -1,5 +1,7 @@
 extends PlayerState
 
+#this has combo mgmt, I can remove it if unused
+
 var registered_combo : int = 0
 var next_combo: String = "" #name of next state in combo chain
 

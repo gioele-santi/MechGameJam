@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/mech.png" type="Texture" id=1]
 [ext_resource path="res://Mech/Mech.gd" type="Script" id=2]
@@ -36,10 +36,34 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( -3, 58.2 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Foot:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Foot/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "kick"
-length = 2.0
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Foot:position")
 tracks/0/interp = 1
@@ -47,10 +71,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -3, 58.2 ), Vector2( 22.25, 46.2 ) ]
+"values": [ Vector2( -16, 45.2 ), Vector2( -3, 58.2 ), Vector2( 27.1, 47.3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Foot:rotation_degrees")
@@ -59,13 +83,64 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, -15.8 ]
+"values": [ 46.3, 0.0, -24.8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Foot/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=5]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Foot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -3, 58.2 ), Vector2( -16, 45.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Foot:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 46.3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Foot/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=6]
 
 [node name="Mech" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -96,6 +171,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Foot"]
 rotation = 1.5708
 shape = SubResource( 2 )
+disabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="Foot"]
 
@@ -103,7 +179,8 @@ shape = SubResource( 2 )
 autoplay = "idle"
 anims/idle = SubResource( 3 )
 anims/kick = SubResource( 4 )
-anims/run = SubResource( 5 )
+anims/kick_charge = SubResource( 5 )
+anims/run = SubResource( 6 )
 
 [node name="FSM" type="Node" parent="."]
 script = ExtResource( 3 )
