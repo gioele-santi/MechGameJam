@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Mech/Mech.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 528, 40 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 24.0
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 4 )
@@ -75,3 +78,17 @@ polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
 [node name="Mech" parent="." instance=ExtResource( 1 )]
 position = Vector2( 72, 472 )
+
+[node name="Probe" type="Area2D" parent="."]
+position = Vector2( 640, 192 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Probe"]
+position = Vector2( 0, -20 )
+rotation = 1.5708
+polygon = PoolVector2Array( 0, 30, 60, 0, 0, -30 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Probe"]
+shape = SubResource( 2 )

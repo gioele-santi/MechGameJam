@@ -118,5 +118,9 @@ rotation = 1.5708
 shape = SubResource( 6 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="InteractiveAreas/Chest" to="." method="_on_Chest_body_entered"]
+[connection signal="body_exited" from="InteractiveAreas/Chest" to="." method="_on_Area_body_exited"]
+[connection signal="body_entered" from="InteractiveAreas/Head" to="." method="_on_Head_body_entered"]
+[connection signal="body_exited" from="InteractiveAreas/Head" to="." method="_on_Area_body_exited"]
 [connection signal="body_entered" from="InteractiveAreas/Foot" to="." method="_on_Foot_body_entered"]
-[connection signal="body_exited" from="InteractiveAreas/Foot" to="." method="_on_Foot_body_exited"]
+[connection signal="body_exited" from="InteractiveAreas/Foot" to="." method="_on_Area_body_exited"]

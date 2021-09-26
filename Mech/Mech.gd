@@ -93,10 +93,22 @@ func _on_fsm_change(state_path: String) -> void:
 
 func _on_Foot_body_entered(body: Node) -> void:
 	if body is MechBall:
-		body.base_direction = direction.normalized()
-		body.controllable = true
+		enable_ball(body, "foot")
 
+func _on_Head_body_entered(body: Node) -> void:
+	if body is MechBall:
+		enable_ball(body, "head")
 
-func _on_Foot_body_exited(body: Node) -> void:
+func _on_Chest_body_entered(body: Node) -> void:
+	if body is MechBall:
+		enable_ball(body, "chest")
+
+func _on_Area_body_exited(body: Node) -> void:
 	if body is MechBall:
 		body.controllable = false
+
+func enable_ball(ball: MechBall,  mode: String) -> void:
+	ball.controllable = true
+	ball.hit_mode = mode
+	ball.base_direction = direction.normalized()
+	
