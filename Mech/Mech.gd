@@ -5,7 +5,7 @@ enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHA
 onready var player := $AnimationPlayer
 onready var fsm := $FSM
 var state : int = 0
-onready var ball_spawn := $BallSpawn
+onready var ball_spawn := $InteractiveAreas/BallSpawn
 
 signal attack_completed
 

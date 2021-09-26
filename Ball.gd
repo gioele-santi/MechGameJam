@@ -6,13 +6,13 @@ signal out_of_reach
 var timer := 0.0
 var controllable := false setget set_controllable
 export var base_strength := 200.0
-var base_direction := Vector2(1,0) 
+var base_direction := Vector2(0,0) 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("kick"):
 		timer = 0.0
 	elif event.is_action_released("kick"):
-		var strength = base_strength + timer * 1000.0
+		var strength = base_strength + timer * 3000.0
 		var dir = get_input_direction()
 		if dir.length() <= 0:
 			dir = base_direction # in case of kick and no motion
@@ -31,5 +31,6 @@ func get_input_direction() -> Vector2:
 
 func set_controllable(value: bool) -> void:
 	controllable = value
+	timer = 0.0 #always reset to avoid keeping old values
 	set_process_unhandled_input(controllable)
 #	print("Ball is controllable:" + str(value))
