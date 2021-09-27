@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Ball.gd" type="Script" id=1]
+[ext_resource path="res://assets/ball.png" type="Texture" id=2]
+[ext_resource path="res://assets/particle.png" type="Texture" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.3
@@ -8,10 +10,16 @@ bounce = 0.3
 [sub_resource type="CircleShape2D" id=2]
 radius = 16.0
 
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.0655738, 0.481818 ), 0.0, 0.0935378, 0, 0, Vector2( 0.622951, 0.372727 ), -0.32973, -0.32973, 0, 0, Vector2( 1, 0.0090909 ), -1.10909, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.989899, 1 )
+colors = PoolColorArray( 0.937957, 0.33815, 0.972656, 1, 0.814146, 0.5271, 0.992188, 0.606417, 0.990459, 0.869677, 0.162497, 0.576471 )
+
 [node name="Ball" type="RigidBody2D"]
-position = Vector2( 192, 424 )
+position = Vector2( -0.707123, -0.707108 )
 physics_material_override = SubResource( 1 )
-gravity_scale = 2.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -21,4 +29,23 @@ __meta__ = {
 shape = SubResource( 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
 polygon = PoolVector2Array( 0, -16, 8, -16, 16, -8, 16, 0, 16, 8, 8, 16, 0, 16, -8, 16, -16, 8, -16, 0, -16, -8, -8, -16 )
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 50
+lifetime = 2.0
+speed_scale = 2.0
+local_coords = false
+texture = ExtResource( 3 )
+direction = Vector2( 0, 0 )
+spread = 10.0
+gravity = Vector2( 0, 0 )
+scale_amount = 0.5
+scale_amount_curve = SubResource( 3 )
+color_ramp = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.19, 0.19 )
+texture = ExtResource( 2 )

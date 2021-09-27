@@ -9,6 +9,7 @@ var hit_mode := "foot"
 export var base_strength := 200.0
 var base_direction := Vector2(0,0) 
 
+onready var trail := $Particles2D
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
@@ -19,6 +20,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if dir.length() <= 0:
 			dir = base_direction # in case of kick and no motion
 		apply_impulse(Vector2.ZERO, dir * strength)
+		trail.emitting = true
 		print("Hit direction: " + str(dir) + " - strength: " + str(strength))
 
 func get_strength() -> float:
@@ -37,6 +39,9 @@ func _process(delta: float) -> void:
 	if global_position.y < -400 or global_position.y > 600:
 		emit_signal("out_of_reach")
 		set_process(false)
+#	print(str(linear_velocity.length()))
+	if linear_velocity.length() < 10.0:
+		trail.emitting = false
 
 func get_input_direction() -> Vector2:
 	return Vector2(Input.get_action_strength("move_right")-Input.get_action_strength("move_left"),
