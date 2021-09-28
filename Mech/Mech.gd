@@ -3,6 +3,7 @@ class_name Mech
 
 enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHARGE}
 onready var player := $AnimationPlayer
+onready var anim := $AnimationTree
 onready var fsm := $FSM
 var state : int = 0
 onready var ball_spawn := $InteractiveAreas/BallSpawn
@@ -68,6 +69,7 @@ func transition_to(state_id: int) -> void:
 			anim_name = "SETUP"
 	player.play(anim_name)
 
+# not so useful anymore with animation tree in use
 func _on_player_animation_finished(name: String)-> void:
 	var target_state_path := "Move/Idle" #most actions will go to ground idle
 	if name == "die":
