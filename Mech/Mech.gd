@@ -9,12 +9,17 @@ onready var ball_spawn := $InteractiveAreas/BallSpawn
 
 signal attack_completed
 
+var kick_charge := 0.0
+
 var direction := Vector2.ZERO setget set_direction
 
 func _ready() -> void:
 	player.connect("animation_finished", self, "_on_player_animation_finished")
 	fsm.connect("transitioned", self, "_on_fsm_change")
 	pass # Replace with function body.
+
+func _process(delta: float) -> void:
+	kick_charge += delta
 
 func set_direction(value: Vector2) -> void:
 	direction = value
@@ -105,10 +110,13 @@ func _on_Chest_body_entered(body: Node) -> void:
 		enable_ball(body, "chest")
 
 func _on_Area_body_exited(body: Node) -> void:
+	set_process(false)
 	if body is MechBall:
 		body.controllable = false
 
 func enable_ball(ball: MechBall,  mode: String) -> void:
+	kick_charge = 0.0
+	set_process(true)
 	ball.controllable = true
 	ball.hit_mode = mode
 	ball.base_direction = direction.normalized()

@@ -18,6 +18,11 @@ func unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("move_down"):
 		state_machine.transition_to("Move/Crouch")
 		return
+#	if event.is_action_pressed("attack"):
+#		state_machine.transition_to("Kick")
+	if event.is_action_released("attack"):
+		state_machine.transition_to("Kick")
+		return
 
 func physics_process(delta: float) -> void:
 	#get input left-right

@@ -11,17 +11,17 @@ var base_direction := Vector2(0,0)
 
 onready var trail := $Particles2D
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
-		timer = 0.0
-	elif event.is_action_released("attack"):
-		var strength = get_strength()
-		var dir = get_input_direction()
-		if dir.length() <= 0:
-			dir = base_direction # in case of kick and no motion
-		apply_impulse(Vector2.ZERO, dir * strength)
-		trail.emitting = true
-		print("Hit direction: " + str(dir) + " - strength: " + str(strength))
+#func _unhandled_input(event: InputEvent) -> void:
+#	if event.is_action_pressed("attack"):
+#		timer = 0.0
+#	elif event.is_action_released("attack"):
+#		var strength = get_strength()
+#		var dir = get_input_direction()
+#		if dir.length() <= 0:
+#			dir = base_direction # in case of kick and no motion
+#		apply_impulse(Vector2.ZERO, dir * strength)
+#		trail.emitting = true
+#		print("Hit direction: " + str(dir) + " - strength: " + str(strength))
 
 func get_strength() -> float:
 	match hit_mode:
