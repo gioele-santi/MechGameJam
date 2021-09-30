@@ -3,7 +3,6 @@ class_name Mech
 
 enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHARGE}
 onready var player := $AnimationPlayer
-onready var anim := $AnimationTree
 onready var fsm := $FSM
 var state : int = 0
 onready var ball_spawn := $InteractiveAreas/BallSpawn
@@ -41,7 +40,7 @@ func transition_to(state_id: int) -> void:
 		States.IDLE:
 			anim_name = "idle"
 		States.WALK:
-			anim_name = "walk"
+			anim_name = "move"
 		States.RUN:
 			anim_name = "run"
 			#particle dust
@@ -71,7 +70,7 @@ func transition_to(state_id: int) -> void:
 
 # not so useful anymore with animation tree in use
 func _on_player_animation_finished(name: String)-> void:
-	var target_state_path := "Move/Idle" #most actions will go to ground idle
+	var target_state_path := "" #most actions will go to ground idle
 	if name == "die":
 		queue_free()
 		#signal for gameover (or delegate health object)
