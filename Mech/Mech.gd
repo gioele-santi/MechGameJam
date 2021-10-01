@@ -6,6 +6,7 @@ onready var player := $AnimationPlayer
 onready var fsm := $FSM
 var state : int = 0
 onready var ball_spawn := $InteractiveAreas/BallSpawn
+var ball : MechBall = null
 
 signal attack_completed
 
@@ -50,8 +51,12 @@ func transition_to(state_id: int) -> void:
 			anim_name = "run"
 			#particle dust
 		States.JUMP:
+			if ball:
+				ball.hit_mode = MechBall.Modes.NONE
 			anim_name = "jump"
 		States.FALL:
+			if ball:
+				ball.hit_mode = MechBall.Modes.NONE
 			anim_name = "fall"
 		States.BUMP:
 			anim_name = "bump"
@@ -60,6 +65,7 @@ func transition_to(state_id: int) -> void:
 			anim_name = "stagger"
 			#tween
 		States.KICK:
+			
 			anim_name = "kick"
 		States.KICKCHARGE:
 			anim_name = "kick_charge"
@@ -85,12 +91,14 @@ func _on_player_animation_finished(name: String)-> void:
 		return #animation is only played at start of state
 	elif name == "crouch":
 		return #animation is only played at start of state
-	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick" or name == "kick_charge":
+	elif name == "kick":
+		if ball:
+			ball.get_kicked(kick_charge)
+		emit_signal("attack_completed")
+		return #animation is only played at start of state
+	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick_charge":
 		emit_signal("attack_completed")
 		return 
-		 #fsm needs to know when anmation ends and it can switch state
-#	elif name == "":
-#		target_state_path = ""
 	
 	fsm.transition_to(target_state_path)
 
@@ -98,26 +106,21 @@ func _on_fsm_change(state_path: String) -> void:
 	$StateLabel.text = fsm.state_name
 
 func _on_Foot_body_entered(body: Node) -> void:
-	if body is MechBall:
-		enable_ball(body, "foot")
+	if body is MechBall and (state == States.IDLE or state == States.WALK):
+		body.hit_mode = MechBall.Modes.FOOT
+		ball = body
+		kick_charge = 0.0
 
 func _on_Head_body_entered(body: Node) -> void:
 	if body is MechBall:
-		enable_ball(body, "head")
+		body.hit_mode = MechBall.Modes.HEAD
 
 func _on_Chest_body_entered(body: Node) -> void:
 	if body is MechBall:
-		enable_ball(body, "chest")
+		body.hit_mode = MechBall.Modes.CHEST
 
 func _on_Area_body_exited(body: Node) -> void:
-	set_process(false)
+#	set_process(false)
 	if body is MechBall:
-		body.controllable = false
-
-func enable_ball(ball: MechBall,  mode: String) -> void:
-	kick_charge = 0.0
-	set_process(true)
-	ball.controllable = true
-	ball.hit_mode = mode
-	ball.base_direction = direction.normalized()
-	
+		body.hit_mode = MechBall.Modes.NONE
+		ball = null

@@ -20,6 +20,7 @@ func spawn_ball() -> void:
 		
 	
 	ball = ball_scene.instance()
+	ball.mech = mech
 	ball.connect("out_of_reach", self, "spawn_ball")
 	
 	add_child(ball)
