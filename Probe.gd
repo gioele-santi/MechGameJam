@@ -30,10 +30,11 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 	move_to_next()
 
 func _on_Probe_body_entered(body: Node) -> void:
-	if not body is MechBall:
-		return
-	$Explosion.play()
-	pass # Replace with function body.
+	if body is Mech:
+		body.take_damage()
+	if body is MechBall:
+		$Explosion.play()
+
 
 
 func _on_Explosion_finished() -> void:

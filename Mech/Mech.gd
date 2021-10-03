@@ -8,6 +8,8 @@ var state : int = 0
 onready var ball_spawn := $InteractiveAreas/BallSpawn
 var ball : MechBall = null
 
+export (int, 30, 200) var health := 80 setget set_health
+
 signal attack_completed
 
 var kick_charge := 0.0
@@ -89,16 +91,11 @@ func _on_player_animation_finished(name: String)-> void:
 	elif name == "win":
 		#fsm or player should call game to finish level (or naything else)
 		return #animation is only played at start of state
-	elif name == "crouch":
-		return #animation is only played at start of state
 	elif name == "kick":
 		if ball:
 			ball.get_kicked(kick_charge)
 		emit_signal("attack_completed")
 		return #animation is only played at start of state
-	elif name == "punch_1" or name == "punch_2" or name == "punch_special" or name == "kick_charge":
-		emit_signal("attack_completed")
-		return 
 	
 	fsm.transition_to(target_state_path)
 
@@ -124,3 +121,12 @@ func _on_Area_body_exited(body: Node) -> void:
 	if body is MechBall:
 		body.hit_mode = MechBall.Modes.NONE
 		ball = null
+
+func take_damage(damage: int = 10) -> void:
+	self.health -= damage
+
+func set_health(new_value: int) -> void:
+	health = new_value
+	if health <= 0:
+		#actually explode then free
+		queue_free()
