@@ -1,6 +1,9 @@
 extends KinematicBody2D
 class_name Mech
 
+signal destroyed
+signal health_changed(value)
+
 enum States {IDLE, WALK, RUN, JUMP, FALL, BUMP, STAGGER, DIE, WIN, KICK, KICKCHARGE}
 onready var player := $AnimationPlayer
 onready var fsm := $FSM
@@ -8,7 +11,7 @@ var state : int = 0
 onready var ball_spawn := $InteractiveAreas/BallSpawn
 var ball : MechBall = null
 
-export (int, 30, 200) var health := 80 setget set_health
+export (int, 30, 200) var health := 30 setget set_health
 
 signal attack_completed
 
@@ -127,6 +130,12 @@ func take_damage(damage: int = 10) -> void:
 
 func set_health(new_value: int) -> void:
 	health = new_value
+	emit_signal("health_changed", health)
 	if health <= 0:
-		#actually explode then free
-		queue_free()
+		$SpriteR.visible = false
+		$SpriteL.visible = false
+		$Explosion.play()
+
+func _on_Explosion_explosion_completed() -> void:
+	emit_signal("destroyed")
+

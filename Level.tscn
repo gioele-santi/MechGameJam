@@ -1,17 +1,28 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Mech/Mech.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Camera/MultiTargetCamera.gd" type="Script" id=3]
 [ext_resource path="res://Level.gd" type="Script" id=4]
 [ext_resource path="res://Probe.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 528, 40 )
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 4 )
+mech_scene = ExtResource( 1 )
+probe_scene = ExtResource( 5 )
 ball_scene = ExtResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource( 6 )]
+margin_left = 0.0
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 528.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 512, 232 )
@@ -61,6 +72,7 @@ color = Color( 0.831373, 0.623529, 0.380392, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
 [node name="Ground3" type="StaticBody2D" parent="."]
+visible = false
 position = Vector2( -40, 312 )
 rotation = 1.5708
 __meta__ = {
@@ -74,8 +86,8 @@ shape = SubResource( 1 )
 color = Color( 0.843137, 0.65098, 0.423529, 1 )
 polygon = PoolVector2Array( 528, 40, 528, -40, -528, -40, -528, 40 )
 
-[node name="Mech" parent="." instance=ExtResource( 1 )]
-position = Vector2( 72, 472 )
+[node name="MechSpawn" type="Position2D" parent="."]
+position = Vector2( 72, 479 )
 
 [node name="Probe" parent="." instance=ExtResource( 5 )]
 
