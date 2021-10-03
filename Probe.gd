@@ -33,9 +33,9 @@ func _on_Probe_body_entered(body: Node) -> void:
 	if body is Mech:
 		body.take_damage()
 	if body is MechBall:
+		$Polygon2D.visible = false
 		$Explosion.play()
 
 
-
-func _on_Explosion_finished() -> void:
+func _on_Explosion_explosion_completed() -> void:
 	queue_free()
