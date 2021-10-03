@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Mech_Jam_Menu.ogg-1be70a62e6b4ccfc2f1a67a21264616f.oggstr"
+
+[deps]
+
+source_file="res://assets/sound/Mech_Jam_Menu.ogg"
+dest_files=[ "res://.import/Mech_Jam_Menu.ogg-1be70a62e6b4ccfc2f1a67a21264616f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

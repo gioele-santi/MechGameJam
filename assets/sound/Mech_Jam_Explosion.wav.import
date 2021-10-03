@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Mech_Jam_Explosion.wav-80525bf4ac661069f59ceea9743fa89a.sample"
+
+[deps]
+
+source_file="res://assets/sound/Mech_Jam_Explosion.wav"
+dest_files=[ "res://.import/Mech_Jam_Explosion.wav-80525bf4ac661069f59ceea9743fa89a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

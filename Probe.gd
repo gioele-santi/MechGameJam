@@ -32,6 +32,9 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 func _on_Probe_body_entered(body: Node) -> void:
 	if not body is MechBall:
 		return
-	print("BOOM!")
-	queue_free()
+	$Explosion.play()
 	pass # Replace with function body.
+
+
+func _on_Explosion_finished() -> void:
+	queue_free()
