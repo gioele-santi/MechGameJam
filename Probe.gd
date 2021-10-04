@@ -1,6 +1,8 @@
 extends Area2D
 class_name Probe
 
+signal probe_exploded
+
 enum FLIGHT_MODES { vertical, horizontal }
 export (FLIGHT_MODES) var flight_mode = FLIGHT_MODES.vertical
 export (float) var excursion = 200.0
@@ -24,6 +26,7 @@ func _ready() -> void:
 func move_to_next() -> void:
 	$Tween.interpolate_property(self, "global_position", global_position, pos[idx%pos.size()], 3.0, Tween.TRANS_LINEAR,Tween.EASE_IN_OUT)
 	$Tween.start()
+	$Sprite.flip_h = not $Sprite.flip_h
 
 func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 	idx += 1
@@ -33,9 +36,8 @@ func _on_Probe_body_entered(body: Node) -> void:
 	if body is Mech:
 		body.take_damage()
 	if body is MechBall:
-		$Polygon2D.visible = false
-		$Explosion.play()
+		$AnimationPlayer.play("explosion")
 
-
-func _on_Explosion_explosion_completed() -> void:
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	emit_signal("probe_exploded")
 	queue_free()

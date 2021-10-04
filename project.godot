@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "RigidBody2D",
 "class": "MechBall",
 "language": "GDScript",
-"path": "res://Ball.gd"
+"path": "res://Ball/Ball.gd"
 }, {
 "base": "Camera2D",
 "class": "MultiTargetCamera",
@@ -75,6 +75,7 @@ _global_script_class_icons={
 [application]
 
 config/name="MechGameJam"
+run/main_scene="res://Level.tscn"
 config/icon="res://icon.png"
 
 [input]

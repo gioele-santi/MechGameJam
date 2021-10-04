@@ -1,30 +1,65 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Probe.gd" type="Script" id=1]
-[ext_resource path="res://Explosion.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sound/Mech_Jam_Explosion.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/Drone_Exploding_V1.png" type="Texture" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 24.0
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 32.0
+height = 32.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "explosion"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Explosion:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 2,
+"values": [ true ]
+}
 
 [node name="Probe" type="Area2D"]
-position = Vector2( 588, 373 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( 0, -20 )
-rotation = 1.5708
-polygon = PoolVector2Array( 0, 30, 60, 0, 0, -30 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="Tween" type="Tween" parent="."]
 
-[node name="Explosion" parent="." instance=ExtResource( 2 )]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+hframes = 8
+
+[node name="Explosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+volume_db = 5.032
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 2 )
 
 [connection signal="body_entered" from="." to="." method="_on_Probe_body_entered"]
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
-[connection signal="explosion_completed" from="Explosion" to="." method="_on_Explosion_explosion_completed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

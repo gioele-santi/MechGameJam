@@ -209,19 +209,19 @@ tracks/3/keys = {
 }
 
 [sub_resource type="CapsuleShape2D" id=7]
-radius = 20.25
-height = 31.3997
+radius = 43.399
+height = 60.9019
 
 [sub_resource type="CapsuleShape2D" id=8]
-radius = 16.65
-height = 32.4846
+radius = 23.2
+height = 60.3982
 
 [sub_resource type="CapsuleShape2D" id=9]
-radius = 12.15
-height = 17.0
+radius = 19.4
+height = 39.4981
 
 [sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 14.7499, 39.1 )
+extents = Vector2( 39.4, 77.399 )
 
 [node name="Mech" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -239,6 +239,7 @@ __meta__ = {
 [node name="Explosion" parent="." instance=ExtResource( 15 )]
 
 [node name="SpriteR" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 hframes = 12
 vframes = 8
@@ -246,6 +247,7 @@ frame = 84
 
 [node name="SpriteL" type="Sprite" parent="."]
 visible = false
+scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 hframes = 12
 vframes = 8
@@ -287,14 +289,14 @@ script = ExtResource( 9 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, 10.25 )
+position = Vector2( 0, 13.25 )
 shape = SubResource( 7 )
 
 [node name="InteractiveAreas" type="Node2D" parent="."]
 visible = false
 
 [node name="BallSpawn" type="Position2D" parent="InteractiveAreas"]
-position = Vector2( 145.819, -261.883 )
+position = Vector2( 259.819, -264.883 )
 
 [node name="Chest" type="Area2D" parent="InteractiveAreas"]
 position = Vector2( 0, 2.2 )
@@ -307,7 +309,7 @@ rotation = 1.5708
 shape = SubResource( 8 )
 
 [node name="Head" type="Area2D" parent="InteractiveAreas"]
-position = Vector2( 0, -23.25 )
+position = Vector2( 0, -40.25 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -318,7 +320,7 @@ rotation = 1.5708
 shape = SubResource( 9 )
 
 [node name="Foot" type="Area2D" parent="InteractiveAreas"]
-position = Vector2( 0.149994, 40.5001 )
+position = Vector2( 0, 64 )
 __meta__ = {
 "_edit_group_": true
 }
