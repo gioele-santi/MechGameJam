@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Mech/Mech.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ball/Ball.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Probe.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/Background_V1.png" type="Texture" id=7]
+[ext_resource path="res://assets/sound/Mech_Jam_Loop.mp3" type="AudioStream" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 528, 40 )
@@ -100,12 +101,14 @@ texture = ExtResource( 7 )
 [node name="MechSpawn" type="Position2D" parent="."]
 position = Vector2( 72, 479 )
 
-[node name="Probe" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1492, 312 )
-
-[node name="Probe2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 937, 412 )
-flight_mode = 1
-
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( 2112, 610 )
+
+[node name="Probes" type="Node" parent="."]
+
+[node name="Position2D" type="Position2D" parent="Probes"]
+position = Vector2( 1880, 424 )
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true

@@ -132,6 +132,7 @@ func set_health(new_value: int) -> void:
 	health = new_value
 	emit_signal("health_changed", health)
 	if health <= 0:
+		# transition to state die to avoid animation resetting
 		$SpriteR.visible = false
 		$SpriteL.visible = false
 		$Explosion.play()

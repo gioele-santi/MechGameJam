@@ -3,8 +3,6 @@ class_name Probe
 
 signal probe_exploded
 
-enum FLIGHT_MODES { vertical, horizontal }
-export (FLIGHT_MODES) var flight_mode = FLIGHT_MODES.vertical
 export (float) var excursion = 200.0
 export (float) var acceleration := 0.25
 
@@ -14,8 +12,10 @@ var pos : Array = []
 var idx = 0
 
 
-func _ready() -> void:
-	if flight_mode == FLIGHT_MODES.vertical:
+func initialize(init_pos: Vector2 = Vector2.ZERO, vertical: bool = true) -> void:
+	global_position = init_pos
+	
+	if vertical:
 		pos.append(Vector2(global_position.x, max(min_y, global_position.y - excursion/2)))
 		pos.append(Vector2(global_position.x, min(max_y, global_position.y + excursion/2)))
 	else:

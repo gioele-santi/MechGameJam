@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Mech_Jam_Loop.mp3-2f69bb464e4fcbcbfaa6da4e9f5f6616.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/Mech_Jam_Loop.mp3"
+dest_files=[ "res://.import/Mech_Jam_Loop.mp3-2f69bb464e4fcbcbfaa6da4e9f5f6616.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

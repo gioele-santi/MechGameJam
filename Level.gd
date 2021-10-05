@@ -8,11 +8,13 @@ var ball : MechBall = null
 var mech : Mech = null
 
 onready var gui: GUI = $CanvasLayer/GUI
-
 onready var camera : MultiTargetCamera = $Camera2D
 
+var level := 1
+var probe_count := 0
+
 func _ready() -> void:
-	
+	randomize()
 	setup_game()
 
 func gameover() -> void:
@@ -24,7 +26,7 @@ func gameover() -> void:
 	#show GUI buttons
 	pass
 
-func setup_game(probe_count: int = 3) -> void:
+func setup_game() -> void:
 	
 	# create random probes
 	if mech == null:
@@ -36,7 +38,21 @@ func setup_game(probe_count: int = 3) -> void:
 		mech.connect("health_changed", gui, "update_health")
 		mech.health = 100
 		mech
+	spawn_probes(3)
 	spawn_ball()
+
+func spawn_probes(count: int = 1) -> void:
+	for i in range(0, count):
+		var probe = probe_scene.instance()
+		probe_count += 1
+		probe.connect("probe_exploded", self, "_probe_exploded")
+		$Probes.add_child(probe)
+		var x = randi() % 1580 + 300
+		var y = randi() % 300 + 150
+		var vertical = ((x + y) % 2 == 0)
+		probe.initialize(Vector2(x,y), vertical)
+		
+	pass
 
 func spawn_ball() -> void:
 	if ball != null:
@@ -55,3 +71,11 @@ func spawn_ball() -> void:
 	
 	camera.add_target(ball)
 
+func _probe_exploded() -> void:
+	probe_count -= 1
+	if probe_count == 0:
+		if level < 10:
+			level += 1
+			spawn_probes(level + 2)
+		
+	pass

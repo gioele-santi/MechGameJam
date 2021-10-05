@@ -25,7 +25,7 @@ func get_kicked(time: float = 0.0) -> void:
 	self.hit_mode = Modes.NONE
 	var dir = get_input_direction()
 	dir.x = base_direction.x
-	dir.y = dir.y/3
+	dir.y = dir.y # do not reduce for now
 	var strength = base_strength + time * 300.0
 	apply_impulse(Vector2.ZERO, dir * strength)
 
