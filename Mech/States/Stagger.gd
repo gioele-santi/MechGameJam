@@ -1,6 +1,6 @@
 extends PlayerState
 
-export (float, 1.0, 10.0) var cooldown_time = 5.0
+export (float, 1.0, 10.0) var cooldown_time = 1.0
 var timer := 0.0
 
 func enter(msg: Dictionary = {}) -> void:

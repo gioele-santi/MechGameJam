@@ -78,7 +78,7 @@ func transition_to(state_id: int) -> void:
 			anim_name = "win"
 			#fsm should have disabled all processing
 		States.DIE:
-			anim_name = "die"
+			anim_name = "explosion"
 			#fsm should have disabled all processing
 		_: 
 			anim_name = "SETUP"
@@ -87,8 +87,8 @@ func transition_to(state_id: int) -> void:
 # not so useful anymore with animation tree in use
 func _on_player_animation_finished(name: String)-> void:
 	var target_state_path := "" #most actions will go to ground idle
-	if name == "die":
-		queue_free()
+	if name == "explosion":
+		emit_signal("destroyed")
 		#signal for gameover (or delegate health object)
 		return
 	elif name == "win":
@@ -127,16 +127,11 @@ func _on_Area_body_exited(body: Node) -> void:
 
 func take_damage(damage: int = 10) -> void:
 	self.health -= damage
+	
 
 func set_health(new_value: int) -> void:
 	health = new_value
 	emit_signal("health_changed", health)
 	if health <= 0:
-		# transition to state die to avoid animation resetting
-		$SpriteR.visible = false
-		$SpriteL.visible = false
-		$Explosion.play()
-
-func _on_Explosion_explosion_completed() -> void:
-	emit_signal("destroyed")
+		transition_to(States.DIE)
 
