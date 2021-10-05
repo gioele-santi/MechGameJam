@@ -15,16 +15,17 @@ var probe_count := 0
 
 func _ready() -> void:
 	randomize()
-	setup_game()
 
-func gameover() -> void:
+func gameover(message: String = "Game Over") -> void:
 	print("GAME OVER!!!")
 	camera.remove_target(mech)
 	mech.queue_free()
 	mech = null
-	#remove all elements so it can be reset
-	#show GUI buttons
-	pass
+	for c in $Probes.get_children():
+		c.queue_free()
+	probe_count = 0
+	level = 1
+	$CanvasLayer/GUI.gameover(message)
 
 func setup_game() -> void:
 	
@@ -77,5 +78,10 @@ func _probe_exploded() -> void:
 		if level < 10:
 			level += 1
 			spawn_probes(level + 2)
-		
+		if level >= 10:
+			gameover("You win!")
 	pass
+
+
+func _on_GUI_play_pressed() -> void:
+	setup_game()

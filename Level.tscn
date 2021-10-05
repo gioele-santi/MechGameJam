@@ -112,3 +112,5 @@ position = Vector2( 1880, 424 )
 [node name="BGMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 autoplay = true
+
+[connection signal="play_pressed" from="CanvasLayer/GUI" to="." method="_on_GUI_play_pressed"]
